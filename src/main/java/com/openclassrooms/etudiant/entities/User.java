@@ -35,6 +35,9 @@ public class User implements UserDetails {
     @Column(name = "firstName", nullable = false)
     private String firstName;
 
+
+
+
     @NotBlank
     @Column(name = "lastName", nullable = false)
     private String lastName;

@@ -32,6 +32,4 @@ public class UserController {
         String jwtToken = userService.login(loginRequestDTO.getLogin(), loginRequestDTO.getPassword());
         return ResponseEntity.ok(jwtToken);
     }
-
-
 }

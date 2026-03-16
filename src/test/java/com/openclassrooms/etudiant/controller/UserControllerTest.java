@@ -22,9 +22,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+import org.springframework.test.context.ActiveProfiles;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Testcontainers
+@ActiveProfiles("test")
 public class UserControllerTest {
 
     private static final String URL = "/api/register";

@@ -22,9 +22,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+import org.springframework.test.context.ActiveProfiles;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Testcontainers
+@ActiveProfiles("test")
 public class UserControllerTest {
 
     private static final String URL = "/api/register";
@@ -35,7 +38,7 @@ public class UserControllerTest {
 
 
     @Container
-    static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest");
+    static MySQLContainer mySQLContainer = new MySQLContainer("mysql:8.0");
 
     @Autowired
     private UserService userService;

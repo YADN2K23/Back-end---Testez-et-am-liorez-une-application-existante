@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -60,6 +61,7 @@ public class EtudiantControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void getAllEtudiants_returns_200() throws Exception {
         // GIVEN
         Etudiant etudiant = new Etudiant();
@@ -76,6 +78,7 @@ public class EtudiantControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void getEtudiantById_returns_200() throws Exception {
         // GIVEN
         Etudiant etudiant = new Etudiant();
@@ -92,6 +95,7 @@ public class EtudiantControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void createEtudiant_returns_201() throws Exception {
         // GIVEN
         EtudiantDTO dto = new EtudiantDTO();
@@ -109,6 +113,7 @@ public class EtudiantControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void updateEtudiant_returns_200() throws Exception {
         // GIVEN
         Etudiant etudiant = new Etudiant();
@@ -132,6 +137,7 @@ public class EtudiantControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void deleteEtudiant_returns_204() throws Exception {
         // GIVEN
         Etudiant etudiant = new Etudiant();

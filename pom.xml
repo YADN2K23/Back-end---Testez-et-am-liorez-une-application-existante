@@ -182,6 +182,7 @@
 								<exclude>**/configuration/logging/**</exclude>
 								<exclude>**/configuration/AppConfig.class</exclude>
 								<exclude>**/EtudiantBackendApplication.class</exclude>
+								<exclude>**/handler/**</exclude>
 							</excludes>
 						</configuration>
 					</execution>

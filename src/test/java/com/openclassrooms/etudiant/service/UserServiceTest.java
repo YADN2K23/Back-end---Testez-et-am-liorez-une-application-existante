@@ -18,12 +18,19 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Tests unitaires pour UserService.
+ * Utilise Mockito pour simuler UserRepository et PasswordEncoder.
+ * Aucune BDD réelle n'est utilisée.
+ */
 @ExtendWith(SpringExtension.class)
 public class UserServiceTest {
+
     private static final String FIRST_NAME = "John";
     private static final String LAST_NAME = "Doe";
     private static final String LOGIN = "LOGIN";
     private static final String PASSWORD = "PASSWORD";
+
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -31,18 +38,25 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
+    /**
+     * Vérifie que register() lève une IllegalArgumentException
+     * lorsqu'on lui passe un utilisateur null.
+     */
     @Test
     public void test_create_null_user_throws_IllegalArgumentException() {
-        // GIVEN
-
-        // THEN
+        // GIVEN : utilisateur null
+        // THEN : une exception est levée
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> userService.register(null));
     }
 
+    /**
+     * Vérifie que register() lève une IllegalArgumentException
+     * lorsque le login existe déjà en base.
+     */
     @Test
     public void test_create_already_exist_user_throws_IllegalArgumentException() {
-        // GIVEN
+        // GIVEN : un utilisateur avec le même login existe déjà
         User user = new User();
         user.setFirstName(FIRST_NAME);
         user.setLastName(LAST_NAME);
@@ -51,14 +65,18 @@ public class UserServiceTest {
         when(passwordEncoder.encode(PASSWORD)).thenReturn(PASSWORD);
         when(userRepository.findByLogin(any())).thenReturn(Optional.of(user));
 
-        // THEN
+        // THEN : une exception est levée car le login est déjà pris
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> userService.register(user));
     }
 
+    /**
+     * Vérifie que register() sauvegarde bien l'utilisateur en base
+     * avec le mot de passe encodé.
+     */
     @Test
     public void test_create_user() {
-        // GIVEN
+        // GIVEN : un nouvel utilisateur valide
         User user = new User();
         user.setFirstName(FIRST_NAME);
         user.setLastName(LAST_NAME);
@@ -67,10 +85,10 @@ public class UserServiceTest {
         when(passwordEncoder.encode(PASSWORD)).thenReturn(PASSWORD);
         when(userRepository.findByLogin(any())).thenReturn(Optional.empty());
 
-        // WHEN
+        // WHEN : on enregistre l'utilisateur
         userService.register(user);
 
-        // THEN
+        // THEN : le repository a bien été appelé avec le bon utilisateur
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
         assertThat(userCaptor.getValue()).isEqualTo(user);
